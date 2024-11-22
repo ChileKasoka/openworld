@@ -4,11 +4,11 @@
         <h1 class="title">Create an Account</h1>
         <form @submit.prevent="handleSignUp">
           <div class="input-group">
-            <label for="username">Username</label>
+            <label for="name">Username</label>
             <input
               type="text"
-              id="username"
-              v-model="username"
+              id="name"
+              v-model="name"
               placeholder="Enter your username"
               required
             />
@@ -33,7 +33,7 @@
               required
             />
           </div>
-          <div class="input-group">
+          <!-- <div class="input-group">
             <label for="confirm-password">Confirm Password</label>
             <input
               type="password"
@@ -42,7 +42,7 @@
               placeholder="Confirm your password"
               required
             />
-          </div>
+          </div> -->
           <button type="submit" class="signup-button">Sign Up</button>
           <p class="login-text">
             Already have an account? <a href="/login" class="login-link">Log In</a>
@@ -53,32 +53,59 @@
   </template>
   
   <script>
+  import axios from "axios";
+
   export default {
     data() {
       return {
-        username: '',
+        name: '',
         email: '',
         password: '',
-        confirmPassword: '',
+        // confirmPassword: '',
       };
     },
     methods: {
-      handleSignUp() {
-        if (this.password !== this.confirmPassword) {
-          alert('Passwords do not match!');
-          return;
+      async handleSignUp() {
+        // if (this.password !== this.confirmPassword) {
+        //   alert('Passwords do not match!');
+        //   return;
+        // }
+
+        try {
+          // Make a POST request to the backend
+          const response = await axios.post("http://localhost:8081/v1/new-user", {
+            name: this.name,
+            email: this.email,
+            password: this.password,
+          });
+
+          console.log("Sign-up response:", response.data);
+
+          // Handle success
+          alert("Sign-up successful!!");
+          this.$router.push("/login"); // Redirect to login page
+        } catch (error) {
+          console.error("Error during sign-up:", error.response?.data || error.message);
+
+          // Handle errors
+          if (error.response) {
+            const { status, data } = error.response;
+            if (status === 400) {
+              alert("Bad request: " + (data?.message || "Please check the form."));
+            } else if (status === 409) {
+              alert("User already exists. Try logging in instead.");
+            } else {
+              alert("Sign-up failed: " + (data?.message || "Unexpected error."));
+            }
+          } else {
+            alert("Network error or server not reachable.");
+          }
         }
-  
-        // Simulate API call or handle sign-up logic
-        console.log('Signing up with:', {
-          username: this.username,
-          email: this.email,
-          password: this.password,
-        });
       },
     },
   };
-  </script>
+</script>
+
   
   <style scoped>
   /* Container and Card */

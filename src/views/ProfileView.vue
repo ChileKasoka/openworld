@@ -71,7 +71,7 @@
           // Update the user data from the response
           this.user.name = response.data.name;
           this.user.email = response.data.email;
-          console.log("User data fetched:", response.data);
+          console.log("User data fetched:", response.data.name);
         } catch (error) {
           console.error("Error fetching user data:", error);
           this.$router.push("/login"); // Redirect to login if unauthorized
