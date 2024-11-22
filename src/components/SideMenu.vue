@@ -38,7 +38,7 @@
     methods: {
       logout() {
         // Logout logic
-        alert("Logged out successfully.");
+        alert("That's it hurrr");
         this.$router.push("/login");
       },
     },

@@ -45,7 +45,7 @@
         this.$emit("toggleMenu");
       },
       logout() {
-        alert("You have logged out.");
+        alert("Ahhhh that's it hurr");
         this.$router.push("/login");
       },
     },

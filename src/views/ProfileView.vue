@@ -42,13 +42,15 @@
   </template>
   
   <script>
+  import axios from "axios";
+  
   export default {
     data() {
       return {
         user: {
-          name: "John Doe",
-          email: "john.doe@example.com",
-          avatar: "https://via.placeholder.com/150",
+          name: "",
+          email: "",
+          avatar: "https://via.placeholder.com/150", // Default avatar
           bio: "Frontend Developer at MyCompany. Passionate about Vue.js and web design.",
         },
         newPost: "",
@@ -57,6 +59,24 @@
       };
     },
     methods: {
+      async fetchCurrentUser() {
+        try {
+          // Fetch the current user dynamically from the API
+          const response = await axios.get("http://localhost:8081/v1/user/{id}", {
+            headers: {
+              Authorization: `Bearer ${localStorage.getItem("accessToken")}`, // Include the JWT token if required
+            },
+          });
+          
+          // Update the user data from the response
+          this.user.name = response.data.name;
+          this.user.email = response.data.email;
+          console.log("User data fetched:", response.data);
+        } catch (error) {
+          console.error("Error fetching user data:", error);
+          this.$router.push("/login"); // Redirect to login if unauthorized
+        }
+      },
       editProfile() {
         // Redirect to settings or open a modal to edit the profile
         this.$router.push("/settings");
@@ -92,8 +112,13 @@
         this.fileToUpload = null;
       },
     },
+    async mounted() {
+      // Fetch the current user details on component mount
+      await this.fetchCurrentUser();
+    },
   };
   </script>
+  
   
   <style scoped>
   /* Profile Page Layout */

@@ -33,6 +33,8 @@
   </template>
   
   <script>
+  import axios from "axios"; // Axios for HTTP requests
+  
   export default {
     data() {
       return {
@@ -41,19 +43,34 @@
       };
     },
     methods: {
-      handleLogin() {
+      async handleLogin() {
         if (this.email && this.password) {
-          // Call your login API
-          console.log('Logging in with:', this.email, this.password);
-          alert('Ahhh hurrrr');
-          this.$router.push("/dash"); 
+          try {
+              const response = await axios.post("http://localhost:8081/v1/login", {
+                email: this.email,
+                password: this.password,
+              });
+
+              console.log("Login response:", response.data); // Log response for debugging
+              const { access_token, refresh_token } = response.data;
+
+              localStorage.setItem("accessToken", access_token);
+              localStorage.setItem("refreshToken", refresh_token);
+
+              alert("Login successful!");
+              this.$router.push("/dash");
+            } catch (error) {
+              console.error("Error during login:", error.response?.data || error.message);
+              alert("Login failed: " + (error.response?.data?.message || "Unexpected error."));
+            }
         } else {
-          alert('Please fill in all fields');
+          alert("Please fill in all fields");
         }
       },
     },
   };
   </script>
+  
   
   <style scoped>
   /* Container and Card */
