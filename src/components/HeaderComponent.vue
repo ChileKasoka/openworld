@@ -13,7 +13,7 @@
         <router-link to="/profile" class="avatar-link" title="Profile">
           <img :src="user.avatar" alt="User Avatar" class="user-avatar" />
         </router-link>
-        <nav>
+        <nav class="nav">
           <router-link to="/dash" class="nav-icon" title="Dashboard">
             <i class="fas fa-tachometer-alt"></i>
           </router-link>
@@ -136,6 +136,10 @@
   
 .hamburger-btn {
     display: block;
+}
+
+.nav{
+  display: flex;
 }
   
 

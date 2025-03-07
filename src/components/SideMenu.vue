@@ -10,6 +10,14 @@
           <span>Dashboard</span>
         </router-link>
         <router-link
+          to="/vendor"
+          class="menu-item"
+          :class="{ active: $route.path === '/vendor' }"
+        >
+          <i class="fas fa-tachometer-alt"></i>
+          <span>Vendorfication</span>
+        </router-link>
+        <router-link
           to="/profile"
           class="menu-item"
           :class="{ active: $route.path === '/profile' }"

@@ -7,6 +7,8 @@ import SignUpView from '../views/SignUpView.vue';
 import DashboardView from '../views/DashboardView.vue';
 import ProfileView from '../views/ProfileView.vue';
 import SettingsView from '../views/SettingsView.vue'
+import VendorView from '@/views/VendorView.vue';
+import ServiceRegistration from '@/views/ServiceRegistration.vue';
 
 const routes = [
   //{ path: '/', name: 'Home', component: Home },
@@ -19,6 +21,16 @@ const routes = [
     path: '/login', 
     name: 'LoginView', 
     component: LoginView 
+  },
+  {
+    path: '/vendor',
+    component: VendorView,
+    name: 'vendor',
+  },
+  {
+    path: '/service',
+    component: ServiceRegistration,
+    name: 'service',
   },
   { 
     path: '/', 
